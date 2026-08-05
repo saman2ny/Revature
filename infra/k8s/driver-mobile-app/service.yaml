@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: driver-mobile-app
+  namespace: fleet-ai
+spec:
+  selector: { app: driver-mobile-app }
+  ports: [{ port: 80, targetPort: 80 }]

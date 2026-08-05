@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-alert-service
+  namespace: fleet-ai
+spec:
+  selector: { app: notification-alert-service }
+  ports: [{ port: 8084, targetPort: 8084 }]
+  # sessionAffinity matters here since STOMP/WebSocket connections are stateful
+  # per-pod; without it, a reconnect can land on a different pod mid-session.
+  sessionAffinity: ClientIP

@@ -1,0 +1,23 @@
+<h1>Alerts &amp; Approvals</h1>
+<p class="subtitle">
+  Actions the Approval Agent escalated instead of auto-approving —
+  route deviations, cost overrides, and anything it flagged as ambiguous.
+</p>
+
+<div *ngIf="pending.length; else none" class="approval-list">
+  <div class="approval-card" *ngFor="let item of pending">
+    <div class="approval-header">
+      <span class="badge">{{ item.sourceEvent === 'ROUTE_UPDATE' ? 'Route Change' : 'Alert' }}</span>
+      <span class="time">{{ item.createdAt | date:'short' }}</span>
+    </div>
+    <p class="message">{{ item.message }}</p>
+    <div class="meta">Driver {{ item.driverId }} · Vehicle {{ item.vehicleId }}</div>
+    <div class="actions">
+      <button class="approve" (click)="approve(item)">Approve</button>
+      <button class="reject" (click)="reject(item)">Reject</button>
+    </div>
+  </div>
+</div>
+<ng-template #none>
+  <p class="empty-state" *ngIf="!loading">Nothing pending — everything in policy has been auto-approved.</p>
+</ng-template>

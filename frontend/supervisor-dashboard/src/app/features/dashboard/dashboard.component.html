@@ -1,0 +1,17 @@
+<h1>Live Fleet Feed</h1>
+<p class="subtitle">Real-time alerts and route updates as the AI Agent Layer raises them.</p>
+
+<div class="feed" *ngIf="feed.length; else empty">
+  <div class="feed-item" *ngFor="let item of feed" [ngClass]="severityClass(item.severity)">
+    <div class="feed-item-header">
+      <span class="badge">{{ item.severity }}</span>
+      <span class="source">{{ item.sourceEvent === 'DRIVER_ALERT' ? 'Driver Alert' : 'Route Update' }}</span>
+      <span class="time">{{ item.createdAt | date:'short' }}</span>
+    </div>
+    <p class="message">{{ item.message }}</p>
+    <div class="meta">Driver {{ item.driverId }} · Vehicle {{ item.vehicleId }}</div>
+  </div>
+</div>
+<ng-template #empty>
+  <p class="empty-state">No activity yet — telemetry will start streaming in once the driver app and backend services are running.</p>
+</ng-template>

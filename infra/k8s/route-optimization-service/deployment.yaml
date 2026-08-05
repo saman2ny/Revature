@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: route-optimization-service
+  namespace: fleet-ai
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: route-optimization-service }
+  template:
+    metadata:
+      labels: { app: route-optimization-service }
+    spec:
+      containers:
+        - name: route-optimization-service
+          image: ghcr.io/your-org/fleet-ai/route-optimization-service:latest
+          ports: [{ containerPort: 8082 }]
+          envFrom:
+            - configMapRef: { name: fleetai-common-config }
+          env:
+            - { name: SERVER_PORT, value: "8082" }
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom: { secretKeyRef: { name: fleetai-secrets, key: POSTGRES_PASSWORD } }
+          readinessProbe:
+            httpGet: { path: /actuator/health, port: 8082 }
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          resources:
+            requests: { cpu: "250m", memory: "512Mi" }
+            limits: { cpu: "1", memory: "1Gi" }

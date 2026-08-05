@@ -1,0 +1,29 @@
+<h1>Ask the Fleet Assistant</h1>
+<p class="subtitle">
+  Grounded in driver history, incident reports, and policy documents via RAG —
+  answers cite their sources rather than guessing.
+</p>
+
+<div class="chat-window">
+  <div class="message" *ngFor="let m of messages" [ngClass]="m.role">
+    <div class="bubble">
+      {{ m.text }}
+      <div class="citations" *ngIf="m.citations?.length">
+        Sources: {{ m.citations?.join(', ') }}
+      </div>
+    </div>
+  </div>
+  <div class="message assistant" *ngIf="asking">
+    <div class="bubble typing">Thinking…</div>
+  </div>
+</div>
+
+<form class="composer" (submit)="send(); $event.preventDefault()">
+  <input
+    type="text"
+    [(ngModel)]="draft"
+    name="draft"
+    placeholder="e.g. Which drivers had harsh-braking alerts this week?"
+  />
+  <button type="submit" [disabled]="asking">Send</button>
+</form>

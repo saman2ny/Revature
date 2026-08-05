@@ -1,0 +1,28 @@
+<div class="app-shell">
+  <header>
+    <h1>Fleet AI — Driver</h1>
+    <p class="subtitle">Vehicle VEH-1001 · Demo Driver</p>
+  </header>
+
+  <section class="status-card">
+    <div class="status-row">
+      <span>Telemetry streaming</span>
+      <button [class.on]="running" (click)="toggle()">{{ running ? 'ON' : 'OFF' }}</button>
+    </div>
+    <div class="sample" *ngIf="lastSample">
+      <div><span>Speed</span><strong>{{ lastSample.speedKmh }} km/h</strong></div>
+      <div><span>Fuel</span><strong>{{ lastSample.fuelLevelPercent }}%</strong></div>
+      <div><span>Engine temp</span><strong>{{ lastSample.engineTempCelsius }}°C</strong></div>
+    </div>
+    <p class="hint" *ngIf="!lastSample">Tap ON to start simulating GPS/speed/telemetry pings to the API Gateway.</p>
+  </section>
+
+  <section class="alerts">
+    <h2>My Alerts</h2>
+    <div class="alert-item" *ngFor="let a of alerts" [ngClass]="severityClass(a.severity)">
+      <p>{{ a.message }}</p>
+      <span class="time">{{ a.createdAt | date:'short' }}</span>
+    </div>
+    <p class="empty" *ngIf="!alerts.length">No alerts right now — safe driving.</p>
+  </section>
+</div>
