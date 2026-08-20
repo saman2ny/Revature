@@ -9,7 +9,7 @@ import lombok.Data;
  * (see docker-compose.yml / infra/k8s configmaps) instead of hardcoding them,
  * so the same image runs unmodified across local, staging, and k8s.
  */
-@Component
+@Component("fleetaiGatewayProperties")
 @ConfigurationProperties(prefix = "fleetai.services")
 @Data
 public class GatewayProperties {

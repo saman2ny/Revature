@@ -26,7 +26,7 @@ public class RagService {
             return List.of();
         }
         return vectorStore.similaritySearch(
-                SearchRequest.query(query).withTopK(topK)
+            SearchRequest.builder().query(query).topK(topK).build()
         );
     }
 

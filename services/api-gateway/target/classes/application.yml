@@ -1,0 +1,44 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: api-gateway
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+  cloud:
+    gateway:
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 10s
+
+fleetai:
+  security:
+    jwt-secret: ${JWT_SECRET:dev-only-change-me-dev-only-change-me}
+  services:
+    monitoring-service-url: ${MONITORING_SERVICE_URL:http://localhost:8081}
+    route-service-url: ${ROUTE_SERVICE_URL:http://localhost:8082}
+    notification-service-url: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+    ai-agent-service-url: ${AI_AGENT_SERVICE_URL:http://localhost:8083}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      monitoringCB: { slidingWindowSize: 20, failureRateThreshold: 50, waitDurationInOpenState: 10s }
+      routeCB: { slidingWindowSize: 20, failureRateThreshold: 50, waitDurationInOpenState: 10s }
+      notificationCB: { slidingWindowSize: 20, failureRateThreshold: 50, waitDurationInOpenState: 10s }
+      agentCB: { slidingWindowSize: 20, failureRateThreshold: 50, waitDurationInOpenState: 15s }
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,gateway
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.fleetai: INFO
+    org.springframework.cloud.gateway: INFO
