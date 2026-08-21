@@ -71,6 +71,14 @@
       <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
     </dependency>
 
+    <!-- Embeddings-only provider for the RAG pipeline. Anthropic has no embeddings
+         endpoint, so this supplies the EmbeddingModel bean PgVectorStoreAutoConfiguration
+         requires; spring.ai.openai.chat.enabled=false keeps Anthropic as the sole ChatModel. -->
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+    </dependency>
+
     <!-- MCP client support: lets agents (esp. Approval + Conversation) call out to
          Model Context Protocol tool servers (fleet ops APIs, ticketing, etc.) using
          a standard tool-calling contract instead of bespoke REST clients per tool. -->

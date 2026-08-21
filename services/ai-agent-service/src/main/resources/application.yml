@@ -26,13 +26,15 @@ spring:
         index-type: HNSW
         distance-type: COSINE_DISTANCE
         dimensions: 1536
-    # If an embeddings provider (OpenAI/Ollama/etc.) is added per the note in
-    # config/VectorStoreConfig.java, disable its chat autoconfiguration here so it
-    # doesn't compete with the Anthropic ChatModel bean, e.g.:
-    # openai:
-    #   api-key: ${OPENAI_API_KEY:}
-    #   chat:
-    #     enabled: false
+    # Embeddings-only: OpenAI supplies the EmbeddingModel bean for pgvector; chat is
+    # disabled here so Anthropic remains the sole ChatModel bean (no competing autoconfig).
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      chat:
+        enabled: false
+      embedding:
+        options:
+          model: text-embedding-3-small
 
 management:
   endpoints:
