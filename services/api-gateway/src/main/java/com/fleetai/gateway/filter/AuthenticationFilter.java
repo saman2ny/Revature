@@ -20,12 +20,17 @@ import java.util.List;
  * Validates the bearer token on every request except the public allow-list
  * (health checks, telemetry ingestion which authenticates the device separately,
  * and the driver/supervisor login endpoints once an auth service is added).
+ *
+ * TEMPORARY: /api/notifications and /ws are open here because no login endpoint
+ * exists yet to issue tokens for the dashboard frontend. Remove these two once a
+ * real auth service is built and the frontend attaches a Bearer token itself.
  */
 @Component
 public class AuthenticationFilter implements GlobalFilter, Ordered {
 
     private static final List<String> OPEN_PATHS = List.of(
-            "/actuator/health", "/api/telemetry", "/fallback"
+            "/actuator/health", "/api/telemetry", "/fallback",
+            "/api/notifications", "/ws"
     );
 
     @Value("${fleetai.security.jwt-secret}")
