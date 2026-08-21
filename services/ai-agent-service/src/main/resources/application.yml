@@ -25,16 +25,17 @@ spring:
         table-name: vector_store
         index-type: HNSW
         distance-type: COSINE_DISTANCE
-        dimensions: 1536
-    # Embeddings-only: OpenAI supplies the EmbeddingModel bean for pgvector; chat is
-    # disabled here so Anthropic remains the sole ChatModel bean (no competing autoconfig).
-    openai:
-      api-key: ${OPENAI_API_KEY:}
+        dimensions: 384
+    # Embeddings-only: self-hosted Ollama supplies the EmbeddingModel bean for pgvector;
+    # chat is disabled here so Anthropic remains the sole ChatModel bean (no competing
+    # autoconfig). base-url points at the Ollama service's private Railway domain.
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
       chat:
         enabled: false
       embedding:
         options:
-          model: text-embedding-3-small
+          model: all-minilm
 
 management:
   endpoints:
