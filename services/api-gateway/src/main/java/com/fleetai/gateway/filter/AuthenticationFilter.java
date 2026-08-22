@@ -21,16 +21,17 @@ import java.util.List;
  * (health checks, telemetry ingestion which authenticates the device separately,
  * and the driver/supervisor login endpoints once an auth service is added).
  *
- * TEMPORARY: /api/notifications and /ws are open here because no login endpoint
- * exists yet to issue tokens for the dashboard frontend. Remove these two once a
- * real auth service is built and the frontend attaches a Bearer token itself.
+ * TEMPORARY: /api/notifications, /ws, and /api/agents are open here because no
+ * login endpoint exists yet to issue tokens for the dashboard frontend. Remove
+ * these once a real auth service is built and the frontend attaches a Bearer
+ * token itself.
  */
 @Component
 public class AuthenticationFilter implements GlobalFilter, Ordered {
 
     private static final List<String> OPEN_PATHS = List.of(
             "/actuator/health", "/api/telemetry", "/fallback",
-            "/api/notifications", "/ws"
+            "/api/notifications", "/ws", "/api/agents"
     );
 
     @Value("${fleetai.security.jwt-secret}")
