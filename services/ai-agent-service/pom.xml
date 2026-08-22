@@ -58,23 +58,14 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- LLM chat client (Anthropic). Swap/add spring-ai-openai-spring-boot-starter
-         for a secondary provider if multi-provider fallback is needed. -->
-    <dependency>
-      <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-anthropic-spring-boot-starter</artifactId>
-    </dependency>
-
     <!-- Vector store for RAG, backed by the same Postgres instance via pgvector -->
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
     </dependency>
 
-    <!-- Embeddings-only provider for the RAG pipeline (self-hosted Ollama). Anthropic has
-         no embeddings endpoint, so this supplies the EmbeddingModel bean
-         PgVectorStoreAutoConfiguration requires; spring.ai.ollama.chat.enabled=false keeps
-         Anthropic as the sole ChatModel. -->
+    <!-- Self-hosted Ollama supplies both the ChatModel and EmbeddingModel beans - no
+         external API billing (Anthropic/OpenAI removed). -->
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
