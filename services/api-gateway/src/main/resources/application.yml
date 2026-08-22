@@ -10,7 +10,7 @@ spring:
     gateway:
       httpclient:
         connect-timeout: 3000
-        response-timeout: 10s
+        response-timeout: 60s
 
 fleetai:
   security:
@@ -28,6 +28,11 @@ resilience4j:
       routeCB: { slidingWindowSize: 20, failureRateThreshold: 50, waitDurationInOpenState: 10s }
       notificationCB: { slidingWindowSize: 20, failureRateThreshold: 50, waitDurationInOpenState: 10s }
       agentCB: { slidingWindowSize: 20, failureRateThreshold: 50, waitDurationInOpenState: 15s }
+  timelimiter:
+    instances:
+      # Default TimeLimiter timeout is 1s, far too short for LLM inference
+      # (especially self-hosted/CPU-bound). Give the agent route real headroom.
+      agentCB: { timeout-duration: 55s }
 
 management:
   endpoints:
