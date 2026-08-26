@@ -24,7 +24,7 @@
     <java.version>17</java.version>
     <!-- Spring AI is evolving fast; pin and bump deliberately.
          Verify the latest GA at https://docs.spring.io/spring-ai/reference/ before building. -->
-    <spring-ai.version>1.0.0-M6</spring-ai.version>
+    <spring-ai.version>1.0.9</spring-ai.version>
   </properties>
 
   <dependencyManagement>
